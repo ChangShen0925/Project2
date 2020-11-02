@@ -7,7 +7,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class NPC {
+public class NPC implements PlayerComponent{
     public boolean RandomSelection = false;
     public boolean HighestSelection = true;
     public boolean SmartSelection = false;
@@ -46,4 +46,8 @@ public class NPC {
         return select.SelectCard(cards);
     }
 
+    @Override
+    public void operate(){
+
+    }
 }

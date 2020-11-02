@@ -10,9 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @SuppressWarnings("serial")
 public class Whist extends CardGame {
-	
 
-  
   final String trumpImage[] = {"bigspade.gif","bigheart.gif","bigdiamond.gif","bigclub.gif"};
 
   static final Random random = ThreadLocalRandom.current();
@@ -46,18 +44,20 @@ public class Whist extends CardGame {
   private final int handWidth = 400;
   private final int trickWidth = 40;
   private final Deck deck = new Deck(Suit.values(), Rank.values(), "cover");
+
   private final Location[] handLocations = {
 			  new Location(350, 625),
 			  new Location(75, 350),
 			  new Location(350, 75),
 			  new Location(625, 350)
-	  };
+  };
   private final Location[] scoreLocations = {
 			  new Location(575, 675),
 			  new Location(25, 575),
 			  new Location(575, 25),
 			  new Location(650, 575)
-	  };
+  };
+
   private Actor[] scoreActors = {null, null, null, null };
   private final Location trickLocation = new Location(350, 350);
   private final Location textLocation = new Location(350, 450);
@@ -68,10 +68,8 @@ public class Whist extends CardGame {
   private boolean enforceRules=false;
 
   public void setStatus(String string) { setStatusText(string); }
-  
-private int[] scores = new int[nbPlayers];
-
-Font bigFont = new Font("Serif", Font.BOLD, 36);
+  private int[] scores = new int[nbPlayers];
+  Font bigFont = new Font("Serif", Font.BOLD, 36);
 
 private void initScore() {
 	 for (int i = 0; i < nbPlayers; i++) {
@@ -114,7 +112,7 @@ private void initRound() {
 //	    for (int i = 1; i < nbPlayers; i++)  // This code can be used to visually hide the cards in a hand (make them face down)
 //	      hands[i].setVerso(true);
 	    // End graphics
- }
+}
 
 private String printHand(ArrayList<Card> cards) {
 	String out = "";
@@ -217,14 +215,13 @@ private Optional<Integer> playRound() {  // Returns winner, if any
 	return Optional.empty();
 }
 
-  public Whist()
-  {
+	public Whist() {
     super(700, 700, 30);
     setTitle("Whist (V" + version + ") Constructed for UofM SWEN30006 with JGameGrid (www.aplu.ch)");
     setStatusText("Initializing...");
     initScore();
     Optional<Integer> winner;
-    do { 
+    do {
       initRound();
       winner = playRound();
     } while (!winner.isPresent());
@@ -236,7 +233,7 @@ private Optional<Integer> playRound() {  // Returns winner, if any
 
   public static void main(String[] args)
   {
-    new Whist();
+  	new Whist();
   }
 
 }
