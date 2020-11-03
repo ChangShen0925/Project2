@@ -6,10 +6,10 @@ import ch.aplu.jgamegrid.*;
 
 import java.util.ArrayList;
 
-public class SmartSelectStrategy implements SelectingStrategy{
+public class SmartSelectStrategy extends SelectingStrategy{
     public RevelentInformation information;
     public SmartSelectStrategy(RevelentInformation information){
-        this.information = information;
+        super(information);
     }
     @Override
     public Card SelectCard(ArrayList<Card> cards) {

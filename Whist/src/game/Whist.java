@@ -71,7 +71,7 @@ public class Whist extends CardGame {
   private int[] scores = new int[nbPlayers];
   Font bigFont = new Font("Serif", Font.BOLD, 36);
 
-private void initScore() {
+	private void initScore() {
 	 for (int i = 0; i < nbPlayers; i++) {
 		 scores[i] = 0;
 		 scoreActors[i] = new TextActor("0", Color.WHITE, bgColor, bigFont);
@@ -79,15 +79,15 @@ private void initScore() {
 	 }
   }
 
-private void updateScore(int player) {
+	private void updateScore(int player) {
 	removeActor(scoreActors[player]);
 	scoreActors[player] = new TextActor(String.valueOf(scores[player]), Color.WHITE, bgColor, bigFont);
 	addActor(scoreActors[player], scoreLocations[player]);
 }
 
-private Card selected;
+	private Card selected;
 
-private void initRound() {
+	private void initRound() {
 		 hands = deck.dealingOut(nbPlayers, nbStartCards); // Last element of hands is leftover cards; these are ignored
 		 for (int i = 0; i < nbPlayers; i++) {
 			   hands[i].sort(Hand.SortType.SUITPRIORITY, true);
@@ -114,7 +114,7 @@ private void initRound() {
 	    // End graphics
 }
 
-private String printHand(ArrayList<Card> cards) {
+	private String printHand(ArrayList<Card> cards) {
 	String out = "";
 	for(int i = 0; i < cards.size(); i++) {
 		out += cards.get(i).toString();
@@ -123,7 +123,7 @@ private String printHand(ArrayList<Card> cards) {
 	return(out);
 }
 
-private Optional<Integer> playRound() {  // Returns winner, if any
+ 	private Optional<Integer> playRound() {  // Returns winner, if any
 	// Select and display trump suit
 		final Suit trumps = randomEnum(Suit.class);
 		final Actor trumpsActor = new Actor("sprites/"+trumpImage[trumps.ordinal()]);
@@ -200,38 +200,37 @@ private Optional<Integer> playRound() {  // Returns winner, if any
 					 winningCard = selected;
 				 }
 			// End Follow
+			}
+			delay(600);
+			trick.setView(this, new RowLayout(hideLocation, 0));
+			trick.draw();
+			nextPlayer = winner;
+			System.out.println("Winner: "+winner);
+			setStatusText("Player " + nextPlayer + " wins trick.");
+			scores[nextPlayer]++;
+			updateScore(nextPlayer);
+			if (winningScore == scores[nextPlayer]) return Optional.of(nextPlayer);
 		}
-		delay(600);
-		trick.setView(this, new RowLayout(hideLocation, 0));
-		trick.draw();		
-		nextPlayer = winner;
-		System.out.println("Winner: "+winner);
-		setStatusText("Player " + nextPlayer + " wins trick.");
-		scores[nextPlayer]++;
-		updateScore(nextPlayer);
-		if (winningScore == scores[nextPlayer]) return Optional.of(nextPlayer);
+		removeActor(trumpsActor);
+		return Optional.empty();
 	}
-	removeActor(trumpsActor);
-	return Optional.empty();
-}
 
 	public Whist() {
-    super(700, 700, 30);
-    setTitle("Whist (V" + version + ") Constructed for UofM SWEN30006 with JGameGrid (www.aplu.ch)");
-    setStatusText("Initializing...");
-    initScore();
-    Optional<Integer> winner;
-    do {
-      initRound();
-      winner = playRound();
-    } while (!winner.isPresent());
-    addActor(new Actor("sprites/gameover.gif"), textLocation);
-    setStatusText("Game over. Winner is player: " + winner.get());
-    refresh();
-  }
+    	super(700, 700, 30);
+    	setTitle("Whist (V" + version + ") Constructed for UofM SWEN30006 with JGameGrid (www.aplu.ch)");
+    	setStatusText("Initializing...");
+    	initScore();
+    	Optional<Integer> winner;
+    	do {
+      	initRound();
+      	winner = playRound();
+    	} while (!winner.isPresent());
+    	addActor(new Actor("sprites/gameover.gif"), textLocation);
+    	setStatusText("Game over. Winner is player: " + winner.get());
+    	refresh();
+  	}
 
-
-  public static void main(String[] args)
+  	public static void main(String[] args)
   {
   	new Whist();
   }

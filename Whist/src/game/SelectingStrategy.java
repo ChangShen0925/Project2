@@ -6,6 +6,11 @@ import ch.aplu.jcardgame.*;
 import java.util.ArrayList;
 
 
-public interface SelectingStrategy {
-    public Card SelectCard(ArrayList<Card> cards);
+public abstract class SelectingStrategy {
+    public RevelentInformation information;
+    public SelectingStrategy(RevelentInformation information){
+        this.information = information;
+    }
+    public abstract Card SelectCard(ArrayList<Card> cards);
+
 }

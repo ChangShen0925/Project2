@@ -9,6 +9,7 @@ public class NaiveLegalStrategy implements FilteringStrategy{
         this.lead = lead;
         this.trump = trump;
     }
+    @Override
     public ArrayList<Card> CardSet(Hand hand){
         ArrayList<Card> cards = new ArrayList<Card>();
         for (int i = 0; i < hand.getCardList().size(); i++){

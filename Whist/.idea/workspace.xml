@@ -2,13 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5b5e19e6-d17d-4a8f-84dd-622dd0f863aa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Whist/game/NPC.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Whist/game/NPC.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Whist/game/Whist$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Whist/game/Whist$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Whist/game/Whist.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Whist/game/Whist.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/HighestSelectStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/HighestSelectStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Human.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Human.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/NPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/NPC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/NaiveLegalStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/NaiveLegalStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/RandomSelectStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/RandomSelectStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/SelectingStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/SelectingStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/SmartSelectStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/SmartSelectStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Whist.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Whist.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -92,10 +93,10 @@
       <screen x="0" y="23" width="1440" height="825" />
     </state>
     <state x="533" y="144" key="#com.intellij.ide.util.MemberChooser/0.23.1440.825@0.23.1440.825" timestamp="1603890745756" />
-    <state x="739" y="404" width="441" height="240" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1604310714610">
+    <state x="739" y="404" width="441" height="240" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1604379941603">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="739" y="404" width="441" height="240" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040@0.0.1920.1040" timestamp="1604310714610" />
+    <state x="739" y="404" width="441" height="240" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040@0.0.1920.1040" timestamp="1604379941603" />
     <state width="1877" height="196" key="GridCell.Tab.0.bottom" timestamp="1604337564932">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -120,13 +121,14 @@
     <state width="1877" height="196" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604337564932" />
     <state width="1398" height="212" key="GridCell.Tab.0.right/0.23.1440.825@0.23.1440.825" timestamp="1603888634089" />
     <state width="1398" height="212" key="GridCell.Tab.0.right/0.23.1440.826@0.23.1440.826" timestamp="1603934624839" />
-    <state x="374" y="268" key="com.intellij.ide.util.TipDialog" timestamp="1603863157007">
-      <screen x="0" y="23" width="1440" height="825" />
-    </state>
-    <state x="374" y="268" key="com.intellij.ide.util.TipDialog/0.23.1440.825@0.23.1440.825" timestamp="1603863157007" />
-    <state x="1103" y="242" width="672" height="678" key="search.everywhere.popup" timestamp="1604335911323">
+    <state x="499" y="309" key="com.intellij.ide.util.TipDialog" timestamp="1604379199370">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="1103" y="242" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1604335911323" />
+    <state x="499" y="309" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604379199370" />
+    <state x="374" y="268" key="com.intellij.ide.util.TipDialog/0.23.1440.825@0.23.1440.825" timestamp="1603863157007" />
+    <state x="1103" y="242" width="672" height="678" key="search.everywhere.popup" timestamp="1604383682485">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1103" y="242" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1604383682485" />
   </component>
 </project>

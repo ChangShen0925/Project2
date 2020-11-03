@@ -4,7 +4,12 @@ import ch.aplu.jcardgame.Card;
 
 import java.util.ArrayList;
 
-public class HighestSelectStrategy implements SelectingStrategy {
+public class HighestSelectStrategy extends SelectingStrategy {
+
+    public HighestSelectStrategy(RevelentInformation information){
+        super(information);
+    }
+
     @Override
     public Card SelectCard(ArrayList<Card> cards) {
         int max = cards.get(0).getRankId();
