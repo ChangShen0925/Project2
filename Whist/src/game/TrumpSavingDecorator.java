@@ -5,13 +5,15 @@ import ch.aplu.jcardgame.Hand;
 
 import java.util.ArrayList;
 
-public class TrumpSavingStrategy implements FilteringStrategy{
+public class TrumpSavingDecorator extends FilteringDecorator {
     public Suit lead;
     public Suit trump;
-    public TrumpSavingStrategy(Suit lead, Suit trump){
+    public TrumpSavingDecorator(FilterNPC npc, Suit lead, Suit trump){
+        super(npc);
         this.lead = lead;
         this.trump = trump;
     }
+
     public ArrayList<Card> CardSet(Hand hand){
         ArrayList<Card> cards = new ArrayList<Card>();
         for (int i = 0; i < hand.getCardList().size(); i++){
@@ -33,5 +35,11 @@ public class TrumpSavingStrategy implements FilteringStrategy{
         }else{
             return cards;
         }
+    }
+
+    @Override
+    public void filter() {
+        npc.filter();
+        ((NPC)npc).setCards(CardSet(((NPC)npc).getHand()));
     }
 }

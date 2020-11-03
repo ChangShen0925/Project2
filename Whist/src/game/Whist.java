@@ -38,12 +38,15 @@ public class Whist extends CardGame {
   }
 	 
   private final String version = "1.0";
-  public final int nbPlayers = 4;
+  public  int nbPlayers = 4;
   public final int nbStartCards = 13;
   public final int winningScore = 2;
   private final int handWidth = 400;
   private final int trickWidth = 40;
   private final Deck deck = new Deck(Suit.values(), Rank.values(), "cover");
+
+  private int humanNum;
+  private int npcNum;
 
   private final Location[] handLocations = {
 			  new Location(350, 625),
@@ -66,6 +69,12 @@ public class Whist extends CardGame {
   private Location hideLocation = new Location(-500, - 500);
   private Location trumpsActorLocation = new Location(50, 50);
   private boolean enforceRules=false;
+
+  	//stores the players
+  	private ManipulatePlayer players;
+
+  	//check wether the player is human or npc
+	public static boolean isHuman = false;
 
   public void setStatus(String string) { setStatusText(string); }
   private int[] scores = new int[nbPlayers];
@@ -101,18 +110,20 @@ public class Whist extends CardGame {
 		 // graphics
 	    RowLayout[] layouts = new RowLayout[nbPlayers];
 	    for (int i = 0; i < nbPlayers; i++) {
-	      layouts[i] = new RowLayout(handLocations[i], handWidth);
-	      layouts[i].setRotationAngle(90 * i);
-	      // layouts[i].setStepDelay(10);
-	      hands[i].setView(this, layouts[i]);
-	      hands[i].setTargetArea(new TargetArea(trickLocation));
-	      hands[i].draw();
+	      	layouts[i] = new RowLayout(handLocations[i], handWidth);
+	      	layouts[i].setRotationAngle(90 * i);
+	      	// layouts[i].setStepDelay(10);
+	      	hands[i].setView(this, layouts[i]);
+	      	hands[i].setTargetArea(new TargetArea(trickLocation));
+	      	hands[i].draw();
 	    }
-	    
 //	    for (int i = 1; i < nbPlayers; i++)  // This code can be used to visually hide the cards in a hand (make them face down)
 //	      hands[i].setVerso(true);
 	    // End graphics
-}
+
+		players = new ManipulatePlayer(nbPlayers, humanNum, npcNum, hands);
+	    players.init();
+	}
 
 	private String printHand(ArrayList<Card> cards) {
 	String out = "";
@@ -124,31 +135,35 @@ public class Whist extends CardGame {
 }
 
  	private Optional<Integer> playRound() {  // Returns winner, if any
-	// Select and display trump suit
+		// Select and display trump suit
 		final Suit trumps = randomEnum(Suit.class);
 		final Actor trumpsActor = new Actor("sprites/"+trumpImage[trumps.ordinal()]);
 	    addActor(trumpsActor, trumpsActorLocation);
-	// End trump suit
-	Hand trick;
-	int winner;
-	Card winningCard;
-	Suit lead;
-	int nextPlayer = random.nextInt(nbPlayers); // randomly select player to lead for this round
-	for (int i = 0; i < nbStartCards; i++) {
-		trick = new Hand(deck);
-    	selected = null;
-        if (0 == nextPlayer) {  // Select lead depending on player type
-    		hands[0].setTouchEnabled(true);
-    		setStatus("Player 0 double-click on card to lead.");
-    		while (null == selected) delay(100);
-        } else {
-    		setStatusText("Player " + nextPlayer + " thinking...");
-            delay(thinkingTime);
-            selected = randomCard(hands[nextPlayer]);
-        }
-        // Lead with selected card
-	        trick.setView(this, new RowLayout(trickLocation, (trick.getNumberOfCards()+2)*trickWidth));
-			trick.draw();
+		// End trump suit
+		Hand trick;
+		int winner;
+		Card winningCard;
+		Suit lead;
+		int nextPlayer = random.nextInt(nbPlayers); // randomly select player to lead for this round
+
+		for (int i = 0; i < nbStartCards; i++) {
+			trick = new Hand(deck);
+    		selected = null;
+        	if (players.getPlayers().get(nextPlayer).isHuman()) {  // Select lead depending on player type
+    			players.getPlayers().get(nextPlayer).operate();
+    			setStatus("Player " + nextPlayer +  "double-click on card to lead.");
+    			while (null == selected) delay(100);
+        	} else {
+    			setStatusText("Player " + nextPlayer + " thinking...");
+    			delay(thinkingTime);
+    			players.getPlayers().get(nextPlayer).operate();
+            	selected = ((NPC)players.getPlayers().get(nextPlayer)).getCurrentCard();
+        	}
+
+
+        	// Lead with selected card
+			trick.setView(this, new RowLayout(trickLocation, (trick.getNumberOfCards()+2)*trickWidth));
+        	trick.draw();
 			selected.setVerso(false);
 			// No restrictions on the card being lead
 			lead = (Suit) selected.getSuit();
@@ -156,42 +171,44 @@ public class Whist extends CardGame {
 			winner = nextPlayer;
 			winningCard = selected;
 			System.out.println("New trick: Lead Player = "+nextPlayer+", Lead suit = "+selected.getSuit()+", Trump suit = "+trumps);
-			System.out.println("Player "+nextPlayer+" play: "+selected.toString()+" from ["+printHand(hands[nextPlayer].getCardList())+"]");
-		// End Lead
-		for (int j = 1; j < nbPlayers; j++) {
-			if (++nextPlayer >= nbPlayers) nextPlayer = 0;  // From last back to first
-			selected = null;
-	        if (0 == nextPlayer) {
-	    		hands[0].setTouchEnabled(true);
-	    		setStatus("Player 0 double-click on card to follow.");
-	    		while (null == selected) delay(100);
-	        } else {
-		        setStatusText("Player " + nextPlayer + " thinking...");
-		        delay(thinkingTime);
-		        selected = randomCard(hands[nextPlayer]);
-	        }
-	        // Follow with selected card
+			System.out.println("Player "+nextPlayer+" play: "+selected.toString()+" from ["+printHand(players.getPlayers().get(nextPlayer).getHand().getCardList())+"]");
+			// End Lead
+
+			for (int j = 1; j < nbPlayers; j++) {
+				if (++nextPlayer >= nbPlayers) nextPlayer = 0;  // From last back to first
+				selected = null;
+	        	if (players.getPlayers().get(nextPlayer).isHuman()) {
+					players.getPlayers().get(nextPlayer).operate();
+					setStatus("Player " + nextPlayer +  "double-click on card to lead.");
+	    			while (null == selected) delay(100);
+	        	} else {
+		        	setStatusText("Player " + nextPlayer + " thinking...");
+		        	delay(thinkingTime);
+					players.getPlayers().get(nextPlayer).operate();
+					selected = ((NPC)players.getPlayers().get(nextPlayer)).getCurrentCard();
+	        	}
+	        	// Follow with selected card
 		        trick.setView(this, new RowLayout(trickLocation, (trick.getNumberOfCards()+2)*trickWidth));
 				trick.draw();
 				selected.setVerso(false);  // In case it is upside down
 				// Check: Following card must follow suit if possible
-					if (selected.getSuit() != lead && hands[nextPlayer].getNumberOfCardsWithSuit(lead) > 0) {
-						 // Rule violation
-						 String violation = "Follow rule broken by player " + nextPlayer + " attempting to play " + selected;
-						 //System.out.println(violation);
-						 if (enforceRules) 
-							 try {
-								 throw(new BrokeRuleException(violation));
-								} catch (BrokeRuleException e) {
-									e.printStackTrace();
-									System.out.println("A cheating player spoiled the game!");
-									System.exit(0);
-								}  
-					 }
+				if (selected.getSuit() != lead && players.getPlayers().get(nextPlayer).getHand().getNumberOfCardsWithSuit(lead) > 0) {
+					// Rule violation
+					String violation = "Follow rule broken by player " + nextPlayer + " attempting to play " + selected;
+					//System.out.println(violation);
+					if (enforceRules)
+						try {
+							throw(new BrokeRuleException(violation));
+						} catch (BrokeRuleException e) {
+							e.printStackTrace();
+							System.out.println("A cheating player spoiled the game!");
+							System.exit(0);
+						}
+				}
 				// End Check
 				 selected.transfer(trick, true); // transfer to trick (includes graphic effect)
 				 System.out.println("Winning card: "+winningCard.toString());
-				 System.out.println("Player "+nextPlayer+" play: "+selected.toString()+" from ["+printHand(hands[nextPlayer].getCardList())+"]");
+				 System.out.println("Player "+nextPlayer+" play: "+selected.toString()+" from ["+printHand(players.getPlayers().get(nextPlayer).getHand().getCardList())+"]");
 				 if ( // beat current winner with higher card
 					 (selected.getSuit() == winningCard.getSuit() && rankGreater(selected, winningCard)) ||
 					  // trumped when non-trump was winning

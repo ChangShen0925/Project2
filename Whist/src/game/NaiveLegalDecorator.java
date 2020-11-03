@@ -2,14 +2,15 @@ package game;
 import ch.aplu.jcardgame.*;
 import java.util.ArrayList;
 
-public class NaiveLegalStrategy implements FilteringStrategy{
+public class NaiveLegalDecorator extends FilteringDecorator {
     public Suit lead;
     public Suit trump;
-    public NaiveLegalStrategy(Suit lead, Suit trump){
+    public NaiveLegalDecorator(FilterNPC npc, Suit lead, Suit trump){
+        super(npc);
         this.lead = lead;
         this.trump = trump;
     }
-    @Override
+
     public ArrayList<Card> CardSet(Hand hand){
         ArrayList<Card> cards = new ArrayList<Card>();
         for (int i = 0; i < hand.getCardList().size(); i++){
@@ -22,5 +23,11 @@ public class NaiveLegalStrategy implements FilteringStrategy{
         }else{
             return cards;
         }
+    }
+
+    @Override
+    public void filter(){
+        npc.filter();
+        ((NPC)npc).setCards(CardSet(((NPC)npc).getHand()));
     }
 }
