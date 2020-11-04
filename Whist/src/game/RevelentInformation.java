@@ -9,7 +9,10 @@ public class RevelentInformation {
     public ArrayList<Card> cards = new ArrayList<Card>();
     public Suit lead;
     public Suit trump;
-    public void Initialise(ArrayList<Hand> hands){
+    Hand[] hands = new Hand[4];
+    private final Deck deck = new Deck(Suit.values(), Rank.values(), "cover");
+    public void Initialise(){
+        hands = deck.dealingOut(4, 13);
         for (Hand hand: hands){
             for (Card card: hand.getCardList()){
                 cards.add(card);
@@ -33,37 +36,46 @@ public class RevelentInformation {
         this.trump = trump;
     }
 
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
+
     public void Remove(Card card){
         cards.remove(card);
     }
     public int SuitableCard(ArrayList<Card> HandCard){
-        int HighestLead = HandCard.get(0).getRankId();
-        int HighestTrump = HandCard.get(0).getRankId();
-        int SmallestRank = HandCard.get(0).getRankId();;
-        int LeadIndex = 0;
-        int TrumpIndex = 0;
+        int HighestLead = 100;
+        int HighestTrump = 100;
+        int SmallestRank = 0;
+        int LeadIndex = -1;
+        int TrumpIndex = -1;
         int SmallestIndex = 0;
-        Boolean HaveHigherLead = false;
-        Boolean HaveHigherTrump = false;
+        Boolean HaveHigherLead = true;
+        Boolean HaveHigherTrump = true;
         int index = 0;
+
         for(Card card: HandCard){
-            if(card.getSuit() == lead && card.getRankId() > HighestLead){
+            if(card.getSuit() == lead && card.getRankId() < HighestLead && lead != null){
                 HighestLead = card.getRankId();
                 LeadIndex = index;
 
-            }else if(card.getSuit() == trump && card.getRankId() > HighestTrump){
+            }
+            if(card.getSuit() == trump && card.getRankId() < HighestTrump){
                 HighestTrump = card.getRankId();
                 TrumpIndex = index;
-            }else if (card.getRankId() < SmallestIndex){
+            }
+            if (card.getRankId() > SmallestRank){
                 SmallestIndex = index;
+                SmallestRank = card.getRankId();
             }
             index++;
         }
         for (Card card: cards){
-            if(card.getSuit() == lead && card.getRankId() > HighestLead){
-                HaveHigherLead = true;
-            }else if(card.getSuit() == trump && card.getRankId() > HighestTrump){
-                HaveHigherTrump = true;
+            if((card.getSuit() == lead && card.getRankId() < HighestLead && LeadIndex != -1)  || lead == null){
+                HaveHigherLead = false;
+            }
+            if(card.getSuit() == trump && card.getRankId() < HighestTrump && TrumpIndex != -1){
+                HaveHigherTrump = false;
             }
         }
         if (!HaveHigherLead && !HaveHigherTrump){

@@ -5,15 +5,14 @@ import java.util.ArrayList;
 
 public class FilteringDecorator implements FilterNPC{
 
-    public FilterNPC npc;
+    public ArrayList<Card> cards;
 
-    public FilteringDecorator(FilterNPC npc){
-        this.npc = npc;
+    public FilteringDecorator(ArrayList<Card> cards){
+        this.cards = cards;
     }
 
     @Override
-    public void filter(){
-        npc.filter();
+    public ArrayList<Card> CardSet() {
+        return cards;
     }
-
 }

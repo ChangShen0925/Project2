@@ -30,4 +30,8 @@ public class Human implements Player {
         return hand;
     }
 
+    public ArrayList<Card> getCardsList(){
+        return cards;
+    }
+
 }

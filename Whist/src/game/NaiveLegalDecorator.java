@@ -5,29 +5,26 @@ import java.util.ArrayList;
 public class NaiveLegalDecorator extends FilteringDecorator {
     public Suit lead;
     public Suit trump;
-    public NaiveLegalDecorator(FilterNPC npc, Suit lead, Suit trump){
-        super(npc);
+    public ArrayList<Card> card;
+    public NaiveLegalDecorator(ArrayList<Card> cards, Suit lead, Suit trump){
+        super(cards);
+        card = cards;
         this.lead = lead;
         this.trump = trump;
     }
 
-    public ArrayList<Card> CardSet(Hand hand){
+    public ArrayList<Card> CardSet(){
         ArrayList<Card> cards = new ArrayList<Card>();
-        for (int i = 0; i < hand.getCardList().size(); i++){
-            if (hand.getCardList().get(i).getSuit() == lead || hand.getCardList().get(i).getSuit() == trump){
-                cards.add(hand.getCardList().get(i));
+        for (int i = 0; i < card.size(); i++){
+            if (card.get(i).getSuit() == lead || card.get(i).getSuit() == trump){
+                cards.add(card.get(i));
             }
         }
         if(cards.size() == 0){
-            return hand.getCardList();
+            return card;
         }else{
             return cards;
         }
     }
 
-    @Override
-    public void filter(){
-        npc.filter();
-        ((NPC)npc).setCards(CardSet(((NPC)npc).getHand()));
-    }
 }

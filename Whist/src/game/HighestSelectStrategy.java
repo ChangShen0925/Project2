@@ -15,7 +15,7 @@ public class HighestSelectStrategy extends SelectingStrategy {
         int max = cards.get(0).getRankId();
         int index = 0;
         for (int i = 0; i < cards.size(); i++) {
-            if (cards.get(i).getRankId() > max) {
+            if (cards.get(i).getRankId() < max) {
                 max = cards.get(i).getRankId();
                 index = i;
             }

@@ -16,6 +16,7 @@ public class RandomSelectStrategy extends SelectingStrategy{
     @Override
     public Card SelectCard(ArrayList<Card> cards) {
         int x = random.nextInt(cards.size());
+
         return cards.get(x);
     }
 }

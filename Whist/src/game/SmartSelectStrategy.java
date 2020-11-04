@@ -10,7 +10,9 @@ public class SmartSelectStrategy extends SelectingStrategy{
     public RevelentInformation information;
     public SmartSelectStrategy(RevelentInformation information){
         super(information);
+        this.information = information;
     }
+
     @Override
     public Card SelectCard(ArrayList<Card> cards) {
         return cards.get(information.SuitableCard(cards));

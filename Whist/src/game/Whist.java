@@ -38,9 +38,11 @@ public class Whist extends CardGame {
   }
 	 
   private final String version = "1.0";
-  public  int nbPlayers = 4;
-  public final int nbStartCards = 13;
-  public final int winningScore = 2;
+  public  int nbPlayers;
+  public int nbStartCards;
+  public int winningScore;
+  public RevelentInformation information = new RevelentInformation();
+
   private final int handWidth = 400;
   private final int trickWidth = 40;
   private final Deck deck = new Deck(Suit.values(), Rank.values(), "cover");
@@ -70,6 +72,10 @@ public class Whist extends CardGame {
   private Location trumpsActorLocation = new Location(50, 50);
   private boolean enforceRules=false;
 
+
+  private int[] NPCSelectMethod;
+  private int[] NPCFilterMethod;
+
   	//stores the players
   	private ManipulatePlayer players;
 
@@ -77,7 +83,7 @@ public class Whist extends CardGame {
 	public static boolean isHuman = false;
 
   public void setStatus(String string) { setStatusText(string); }
-  private int[] scores = new int[nbPlayers];
+  private int[] scores;
   Font bigFont = new Font("Serif", Font.BOLD, 36);
 
 	private void initScore() {
@@ -106,7 +112,10 @@ public class Whist extends CardGame {
 			    {
 			      public void leftDoubleClicked(Card card) { selected = card; hands[0].setTouchEnabled(false); }
 			    };
-		hands[0].addCardListener(cardListener);
+		 for (int i = 0; i < humanNum; i++){
+			 hands[i].addCardListener(cardListener);
+		 }
+
 		 // graphics
 	    RowLayout[] layouts = new RowLayout[nbPlayers];
 	    for (int i = 0; i < nbPlayers; i++) {
@@ -120,9 +129,9 @@ public class Whist extends CardGame {
 //	    for (int i = 1; i < nbPlayers; i++)  // This code can be used to visually hide the cards in a hand (make them face down)
 //	      hands[i].setVerso(true);
 	    // End graphics
-
-		players = new ManipulatePlayer(nbPlayers, humanNum, npcNum, hands);
-	    players.init();
+		information.Initialise();
+		players = new ManipulatePlayer(nbPlayers, humanNum, npcNum, hands, information);
+	    players.init(NPCSelectMethod);
 	}
 
 	private String printHand(ArrayList<Card> cards) {
@@ -144,18 +153,21 @@ public class Whist extends CardGame {
 		int winner;
 		Card winningCard;
 		Suit lead;
+
 		int nextPlayer = random.nextInt(nbPlayers); // randomly select player to lead for this round
 
+		information.setTrump(trumps);
 		for (int i = 0; i < nbStartCards; i++) {
 			trick = new Hand(deck);
     		selected = null;
         	if (players.getPlayers().get(nextPlayer).isHuman()) {  // Select lead depending on player type
     			players.getPlayers().get(nextPlayer).operate();
-    			setStatus("Player " + nextPlayer +  "double-click on card to lead.");
+    			setStatus("Player " + nextPlayer +  " double-click on card to lead.");
     			while (null == selected) delay(100);
         	} else {
     			setStatusText("Player " + nextPlayer + " thinking...");
     			delay(thinkingTime);
+				((NPC) players.getPlayers().get(nextPlayer)).setCards(players.getPlayers().get(nextPlayer).getHand().getCardList());
     			players.getPlayers().get(nextPlayer).operate();
             	selected = ((NPC)players.getPlayers().get(nextPlayer)).getCurrentCard();
         	}
@@ -173,20 +185,31 @@ public class Whist extends CardGame {
 			System.out.println("New trick: Lead Player = "+nextPlayer+", Lead suit = "+selected.getSuit()+", Trump suit = "+trumps);
 			System.out.println("Player "+nextPlayer+" play: "+selected.toString()+" from ["+printHand(players.getPlayers().get(nextPlayer).getHand().getCardList())+"]");
 			// End Lead
-
+			information.setLead(lead);
+			information.Remove(selected);
 			for (int j = 1; j < nbPlayers; j++) {
 				if (++nextPlayer >= nbPlayers) nextPlayer = 0;  // From last back to first
 				selected = null;
 	        	if (players.getPlayers().get(nextPlayer).isHuman()) {
 					players.getPlayers().get(nextPlayer).operate();
-					setStatus("Player " + nextPlayer +  "double-click on card to lead.");
+					setStatus("Player " + nextPlayer +  " double-click on card to lead.");
 	    			while (null == selected) delay(100);
 	        	} else {
 		        	setStatusText("Player " + nextPlayer + " thinking...");
+
+					FilteringDecorator[] FilterMethod = new FilteringDecorator[]{new FilteringDecorator(players.getPlayers().get(nextPlayer).getHand().getCardList()),
+							new NaiveLegalDecorator(players.getPlayers().get(nextPlayer).getHand().getCardList(), lead, trumps),
+							new TrumpSavingDecorator(players.getPlayers().get(nextPlayer).getHand().getCardList(), lead, trumps)};
+
 		        	delay(thinkingTime);
+
+		        	((NPC) players.getPlayers().get(nextPlayer)).setCards(FilterMethod[nextPlayer - humanNum].CardSet());
+
+
 					players.getPlayers().get(nextPlayer).operate();
 					selected = ((NPC)players.getPlayers().get(nextPlayer)).getCurrentCard();
 	        	}
+				information.Remove(selected);
 	        	// Follow with selected card
 		        trick.setView(this, new RowLayout(trickLocation, (trick.getNumberOfCards()+2)*trickWidth));
 				trick.draw();
@@ -232,15 +255,68 @@ public class Whist extends CardGame {
 		return Optional.empty();
 	}
 
+	public void ReadPropertyFile(){
+		 //File file= new whistFile();
+		 //File file= new legalFile();
+		 File file= new smartFile();
+		 Properties PropertyFile = file.writeProperties();
+		 humanNum = Integer.parseInt(PropertyFile.getProperty("human"));
+		 npcNum = Integer.parseInt(PropertyFile.getProperty("NPC"));
+		 nbStartCards = Integer.parseInt(PropertyFile.getProperty("nbStartCard"));
+		 winningScore = Integer.parseInt(PropertyFile.getProperty("winningScore"));
+		 NPCFilterMethod = new int[npcNum];
+		 NPCSelectMethod = new int[npcNum];
+
+		 if(npcNum == 1){
+		 	NPCFilterMethod[0] = Integer.parseInt(PropertyFile.getProperty("NPCOneFilter"));
+		 	NPCSelectMethod[0] = Integer.parseInt(PropertyFile.getProperty("NPCOneSelect"));
+		 }else if(npcNum == 2){
+			 NPCFilterMethod[0] = Integer.parseInt(PropertyFile.getProperty("NPCOneFilter"));
+			 NPCSelectMethod[0] = Integer.parseInt(PropertyFile.getProperty("NPCOneSelect"));
+
+			 NPCFilterMethod[1] = Integer.parseInt(PropertyFile.getProperty("NPCTwoFilter"));
+			 NPCSelectMethod[1] = Integer.parseInt(PropertyFile.getProperty("NPCTwoSelect"));
+		 }else if(npcNum == 3){
+
+			 NPCFilterMethod[0] = Integer.parseInt(PropertyFile.getProperty("NPCOneFilter"));
+			 NPCSelectMethod[0] = Integer.parseInt(PropertyFile.getProperty("NPCOneSelect"));
+
+			 NPCFilterMethod[1] = Integer.parseInt(PropertyFile.getProperty("NPCTwoFilter"));
+			 NPCSelectMethod[1] = Integer.parseInt(PropertyFile.getProperty("NPCTwoSelect"));
+
+			 NPCFilterMethod[2] = Integer.parseInt(PropertyFile.getProperty("NPCThreeFilter"));
+			 NPCSelectMethod[2] = Integer.parseInt(PropertyFile.getProperty("NPCThreeSelect"));
+		 }else if(npcNum == 4){
+			 NPCFilterMethod[0] = Integer.parseInt(PropertyFile.getProperty("NPCOneFilter"));
+			 NPCSelectMethod[0] = Integer.parseInt(PropertyFile.getProperty("NPCOneSelect"));
+
+			 NPCFilterMethod[1] = Integer.parseInt(PropertyFile.getProperty("NPCTwoFilter"));
+			 NPCSelectMethod[1] = Integer.parseInt(PropertyFile.getProperty("NPCTwoSelect"));
+
+			 NPCFilterMethod[2] = Integer.parseInt(PropertyFile.getProperty("NPCThreeFilter"));
+			 NPCSelectMethod[2] = Integer.parseInt(PropertyFile.getProperty("NPCThreeSelect"));
+
+			 NPCFilterMethod[3] = Integer.parseInt(PropertyFile.getProperty("NPCFourFilter"));
+			 NPCSelectMethod[3] = Integer.parseInt(PropertyFile.getProperty("NPCFourSelect"));
+
+		 }
+
+		 nbPlayers = humanNum + npcNum;
+		 scores = new int[nbPlayers];
+
+	}
+
 	public Whist() {
     	super(700, 700, 30);
     	setTitle("Whist (V" + version + ") Constructed for UofM SWEN30006 with JGameGrid (www.aplu.ch)");
     	setStatusText("Initializing...");
+		ReadPropertyFile();
     	initScore();
     	Optional<Integer> winner;
     	do {
       	initRound();
       	winner = playRound();
+      	information.Initialise();
     	} while (!winner.isPresent());
     	addActor(new Actor("sprites/gameover.gif"), textLocation);
     	setStatusText("Game over. Winner is player: " + winner.get());

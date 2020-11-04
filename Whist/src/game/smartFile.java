@@ -7,67 +7,24 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class smartFile implements File{
     static final Random random = ThreadLocalRandom.current();
-    private static final int NumberOfFilteringMethod = 2;
+    private static final int NumberOfFilteringMethod = 3;
     private static final int NumberOfSelectingMethod = 3;
     @Override
-    public void writeProperties() {
+    public Properties writeProperties() {
         Properties smart = new Properties();
         smart.setProperty("human", "1");
         smart.setProperty("NPC", "3");
         smart.setProperty("nbStartCard", "13");
         smart.setProperty("winningScore", "24");
 
-        smart.setProperty("NPCOneNaiveLegal", "false");
-        smart.setProperty("NPCOneTrumpSaving", "false");
+        smart.setProperty("NPCOneSelect", "2");
+        smart.setProperty("NPCTwoSelect", Integer.toString(RandomNumberForSelecting()));
+        smart.setProperty("NPCThreeSelect", Integer.toString(RandomNumberForSelecting()));
 
-        if (RandomNumberForFiltering() == 0){
-            smart.setProperty("NPCTwoNaiveLegal", "true");
-            smart.setProperty("NPCTwoTrumpSaving", "false");
-        }else{
-            smart.setProperty("NPCTwoNaiveLegal", "false");
-            smart.setProperty("NPCTwoTrumpSaving", "true");
-        }
-
-        if (RandomNumberForFiltering() == 0){
-            smart.setProperty("NPCThreeNaiveLegal", "true");
-            smart.setProperty("NPCThreeTrumpSaving", "false");
-        }else{
-            smart.setProperty("NPCThreeNaiveLegal", "false");
-            smart.setProperty("NPCThreeTrumpSaving", "true");
-        }
-
-        smart.setProperty("NPCOneRandomSelection", "false");
-        smart.setProperty("NPCOneHighestSelection", "false");
-        smart.setProperty("NPCOneSmartSelection", "true");
-
-        if(RandomNumberForSelecting() == 0){
-            smart.setProperty("NPCTwoRandomSelection", "true");
-            smart.setProperty("NPCTwoHighestSelection", "false");
-            smart.setProperty("NPCTwoSmartSelection", "false");
-        }else if(RandomNumberForSelecting() == 1){
-            smart.setProperty("NPCTwoRandomSelection", "false");
-            smart.setProperty("NPCTwoHighestSelection", "true");
-            smart.setProperty("NPCTwoSmartSelection", "false");
-        }else{
-            smart.setProperty("NPCTwoRandomSelection", "false");
-            smart.setProperty("NPCTwoHighestSelection", "false");
-            smart.setProperty("NPCTwoSmartSelection", "true");
-        }
-
-        if(RandomNumberForSelecting() == 0){
-            smart.setProperty("NPCThreeRandomSelection", "true");
-            smart.setProperty("NPCThreeHighestSelection", "false");
-            smart.setProperty("NPCThreeSmartSelection", "false");
-        }else if(RandomNumberForSelecting() == 1){
-            smart.setProperty("NPCThreeRandomSelection", "false");
-            smart.setProperty("NPCThreeHighestSelection", "true");
-            smart.setProperty("NPCThreeSmartSelection", "false");
-        }else{
-            smart.setProperty("NPCThreeRandomSelection", "false");
-            smart.setProperty("NPCThreeHighestSelection", "false");
-            smart.setProperty("NPCThreeSmartSelection", "true");
-        }
-
+        smart.setProperty("NPCOneFilter", "0");
+        smart.setProperty("NPCTwoFilter", Integer.toString(RandomNumberForFiltering()));
+        smart.setProperty("NPCThreeFilter", Integer.toString(RandomNumberForFiltering()));
+        return smart;
     }
 
     public int RandomNumberForFiltering(){

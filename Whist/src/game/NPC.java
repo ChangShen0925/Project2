@@ -4,10 +4,9 @@ import ch.aplu.jcardgame.*;
 
 import java.util.ArrayList;
 
-public class NPC implements Player, FilterNPC{
+public class NPC implements Player{
 
     private SelectingStrategy selectingStrategy;
-    private FilteringDecorator filteringDecorator;
 
     public ArrayList<Card> cards = new ArrayList<Card>();
 
@@ -39,16 +38,16 @@ public class NPC implements Player, FilterNPC{
         return hand;
     }
 
-    @Override
-    public void filter(){
-
-    }
 
     public Card getCurrentCard() {
         return currentCard;
     }
 
-    public void setCards(ArrayList<Card> cards) {
-        this.cards = cards;
+    public void setCards(ArrayList<Card> card) {
+        this.cards = card;
+    }
+
+    public ArrayList<Card> getCardsList(){
+        return cards;
     }
 }
