@@ -71,10 +71,10 @@ public class RevelentInformation {
             index++;
         }
         for (Card card: cards){
-            if((card.getSuit() == lead && card.getRankId() < HighestLead && LeadIndex != -1)  || lead == null){
+            if((card.getSuit() == lead && card.getRankId() < HighestLead)  || lead == null || LeadIndex == -1){
                 HaveHigherLead = false;
             }
-            if(card.getSuit() == trump && card.getRankId() < HighestTrump && TrumpIndex != -1){
+            if((card.getSuit() == trump && card.getRankId() < HighestTrump) || TrumpIndex != -1){
                 HaveHigherTrump = false;
             }
         }
