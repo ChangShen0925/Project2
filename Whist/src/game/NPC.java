@@ -40,6 +40,7 @@ public class NPC implements Player, FilterNPC{
 
     @Override
     public void CardSet(){
+        this.cards = this.hand.getCardList();
     }
 
 
