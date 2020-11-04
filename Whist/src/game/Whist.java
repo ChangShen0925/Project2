@@ -197,13 +197,13 @@ public class Whist extends CardGame {
 	        	} else {
 		        	setStatusText("Player " + nextPlayer + " thinking...");
 
-					FilteringDecorator[] FilterMethod = new FilteringDecorator[]{new FilteringDecorator(players.getPlayers().get(nextPlayer).getHand().getCardList()),
-							new NaiveLegalDecorator(players.getPlayers().get(nextPlayer).getHand().getCardList(), lead, trumps),
-							new TrumpSavingDecorator(players.getPlayers().get(nextPlayer).getHand().getCardList(), lead, trumps)};
+					FilterNPC[] FilterMethod = new FilterNPC[]{((NPC)players.getPlayers().get(nextPlayer)),
+							new NaiveLegalDecorator((NPC)players.getPlayers().get(nextPlayer), lead, trumps),
+							new TrumpSavingDecorator((NPC)players.getPlayers().get(nextPlayer), lead, trumps)};
 
 		        	delay(thinkingTime);
 
-		        	((NPC) players.getPlayers().get(nextPlayer)).setCards(FilterMethod[nextPlayer - humanNum].CardSet());
+					FilterMethod[nextPlayer - humanNum].CardSet();
 
 
 					players.getPlayers().get(nextPlayer).operate();

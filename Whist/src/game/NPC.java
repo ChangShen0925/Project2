@@ -4,11 +4,11 @@ import ch.aplu.jcardgame.*;
 
 import java.util.ArrayList;
 
-public class NPC implements Player{
+public class NPC implements Player, FilterNPC{
 
     private SelectingStrategy selectingStrategy;
 
-    public ArrayList<Card> cards = new ArrayList<Card>();
+    private ArrayList<Card> cards = new ArrayList<Card>();
 
     private Hand hand;
     private Card currentCard;
@@ -36,6 +36,10 @@ public class NPC implements Player{
     @Override
     public Hand getHand() {
         return hand;
+    }
+
+    @Override
+    public void CardSet(){
     }
 
 

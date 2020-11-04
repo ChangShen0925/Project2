@@ -3,21 +3,22 @@
   <component name="ChangeListManager">
     <list default="true" id="5b5e19e6-d17d-4a8f-84dd-622dd0f863aa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Whist/game/HighestSelectStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Whist/game/HighestSelectStrategy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Whist/game/FilteringStrategy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Whist/game/Human.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Whist/game/Human.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Whist/game/ManipulatePlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Whist/game/ManipulatePlayer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Whist/game/NPC.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Whist/game/NPC.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Whist/game/NaiveLegalStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Whist/game/NaiveLegalStrategy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Whist/game/RandomSelectStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Whist/game/RandomSelectStrategy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Whist/game/SelectingStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Whist/game/SelectingStrategy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Whist/game/SmartSelectStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Whist/game/SmartSelectStrategy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Whist/game/NaiveLegalStrategy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Whist/game/PlayerComponent.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Whist/game/PlayerComposite.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Whist/game/TrumpSavingStrategy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Whist/game/Whist$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Whist/game/Whist$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Whist/game/Whist.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Whist/game/Whist.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/FilteringStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/FilteringDecorator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Human.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Human.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/ManipulatePlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/ManipulatePlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/FilterNPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/FilterNPC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/FilteringDecorator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/FilteringDecorator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/FilteringMethod.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/NPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/NPC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/NaiveLegalStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/NaiveLegalDecorator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/PlayerComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/PlayerComposite.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/TrumpSavingStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/TrumpSavingDecorator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/NaiveLegalDecorator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/NaiveLegalDecorator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/TrumpSavingDecorator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/TrumpSavingDecorator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game/Whist.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Whist.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -49,13 +50,14 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="C:/Java/Whist" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Project2" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="restartRequiresConfirmation" value="false" />
   </component>
   <component name="RunManager">
     <configuration name="Whist" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -114,42 +116,72 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1057" y="270" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604417315952" />
-    <state x="1107" y="278" key="FileChooserDialogImpl" timestamp="1604421709880">
+    <state x="1107" y="278" key="FileChooserDialogImpl" timestamp="1604498814163">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="1107" y="278" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1604421709880" />
-    <state width="1326" height="195" key="GridCell.Tab.0.bottom" timestamp="1604432410882">
+    <state x="1107" y="278" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1604498814163" />
+    <state width="1877" height="348" key="GridCell.Tab.0.bottom" timestamp="1604501302359">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1326" height="195" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604432410882" />
+    <state width="1877" height="348" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604501302359" />
     <state width="1398" height="212" key="GridCell.Tab.0.bottom/0.23.1440.825@0.23.1440.825" timestamp="1603888634089" />
     <state width="1398" height="212" key="GridCell.Tab.0.bottom/0.23.1440.826@0.23.1440.826" timestamp="1603934624840" />
-    <state width="1326" height="195" key="GridCell.Tab.0.center" timestamp="1604432410882">
+    <state width="1877" height="348" key="GridCell.Tab.0.center" timestamp="1604501302359">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1326" height="195" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604432410882" />
+    <state width="1877" height="348" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604501302359" />
     <state width="1398" height="212" key="GridCell.Tab.0.center/0.23.1440.825@0.23.1440.825" timestamp="1603888634088" />
     <state width="1398" height="212" key="GridCell.Tab.0.center/0.23.1440.826@0.23.1440.826" timestamp="1603934624839" />
-    <state width="1326" height="195" key="GridCell.Tab.0.left" timestamp="1604432410882">
+    <state width="1877" height="348" key="GridCell.Tab.0.left" timestamp="1604501302359">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1326" height="195" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604432410882" />
+    <state width="1877" height="348" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604501302359" />
     <state width="1398" height="212" key="GridCell.Tab.0.left/0.23.1440.825@0.23.1440.825" timestamp="1603888634088" />
     <state width="1398" height="212" key="GridCell.Tab.0.left/0.23.1440.826@0.23.1440.826" timestamp="1603934624839" />
-    <state width="1326" height="195" key="GridCell.Tab.0.right" timestamp="1604432410882">
+    <state width="1877" height="348" key="GridCell.Tab.0.right" timestamp="1604501302359">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1326" height="195" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604432410882" />
+    <state width="1877" height="348" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604501302359" />
     <state width="1398" height="212" key="GridCell.Tab.0.right/0.23.1440.825@0.23.1440.825" timestamp="1603888634089" />
     <state width="1398" height="212" key="GridCell.Tab.0.right/0.23.1440.826@0.23.1440.826" timestamp="1603934624839" />
-    <state x="499" y="309" key="com.intellij.ide.util.TipDialog" timestamp="1604405102686">
+    <state width="1877" height="348" key="GridCell.Tab.1.bottom" timestamp="1604501302361">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="499" y="309" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604405102686" />
+    <state width="1877" height="348" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604501302361" />
+    <state width="1877" height="348" key="GridCell.Tab.1.center" timestamp="1604501302360">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604501302360" />
+    <state width="1877" height="348" key="GridCell.Tab.1.left" timestamp="1604501302360">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604501302360" />
+    <state width="1877" height="348" key="GridCell.Tab.1.right" timestamp="1604501302361">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604501302361" />
+    <state x="499" y="309" key="com.intellij.ide.util.TipDialog" timestamp="1604496309222">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="499" y="309" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604496309222" />
     <state x="374" y="268" key="com.intellij.ide.util.TipDialog/0.23.1440.825@0.23.1440.825" timestamp="1603863157007" />
     <state x="1103" y="242" width="672" height="678" key="search.everywhere.popup" timestamp="1604417033807">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1103" y="242" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1604417033807" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/game/NPC.java</url>
+          <line>53</line>
+          <properties class="game.NPC" method="getCardsList">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

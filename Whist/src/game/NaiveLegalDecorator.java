@@ -3,17 +3,19 @@ import ch.aplu.jcardgame.*;
 import java.util.ArrayList;
 
 public class NaiveLegalDecorator extends FilteringDecorator {
-    public Suit lead;
-    public Suit trump;
+
     public ArrayList<Card> card;
-    public NaiveLegalDecorator(ArrayList<Card> cards, Suit lead, Suit trump){
-        super(cards);
-        card = cards;
-        this.lead = lead;
-        this.trump = trump;
+    public NaiveLegalDecorator(NPC npc, Suit lead, Suit trump){
+        super(npc, lead, trump);
+        this.card = npc.getHand().getCardList();
     }
 
-    public ArrayList<Card> CardSet(){
+    @Override
+    public void CardSet(){
+        npc.setCards(naiveLegalSet());
+    }
+
+    private ArrayList<Card>  naiveLegalSet(){
         ArrayList<Card> cards = new ArrayList<Card>();
         for (int i = 0; i < card.size(); i++){
             if (card.get(i).getSuit() == lead || card.get(i).getSuit() == trump){
