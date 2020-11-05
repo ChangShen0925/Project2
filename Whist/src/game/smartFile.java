@@ -6,9 +6,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 
 public class smartFile implements File{
-    static final Random random = ThreadLocalRandom.current();
-    private static final int NumberOfFilteringMethod = 3;
-    private static final int NumberOfSelectingMethod = 3;
+    static final Random RANDOM = ThreadLocalRandom.current();
+    private static final int NUMBER_OF_FILTERING_METHOD = 3;
+    private static final int NUMBER_OF_SELECTING_METHOD = 3;
     @Override
     public Properties writeProperties() {
         Properties smart = new Properties();
@@ -28,10 +28,10 @@ public class smartFile implements File{
     }
 
     public int RandomNumberForFiltering(){
-        return random.nextInt(NumberOfFilteringMethod);
+        return RANDOM.nextInt(NUMBER_OF_FILTERING_METHOD);
     }
 
     public int RandomNumberForSelecting(){
-        return random.nextInt(NumberOfSelectingMethod);
+        return RANDOM.nextInt(NUMBER_OF_SELECTING_METHOD);
     }
 }

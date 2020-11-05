@@ -11,25 +11,25 @@ import java.util.concurrent.ThreadLocalRandom;
 @SuppressWarnings("serial")
 public class Whist extends CardGame {
 
-  final String trumpImage[] = {"bigspade.gif","bigheart.gif","bigdiamond.gif","bigclub.gif"};
+  final String TRUMPIMAGE[] = {"bigspade.gif","bigheart.gif","bigdiamond.gif","bigclub.gif"};
 
-  static final Random random = ThreadLocalRandom.current();
+  static final Random RANDOM = ThreadLocalRandom.current();
   
   // return random Enum value
   public static <T extends Enum<?>> T randomEnum(Class<T> clazz){
-      int x = random.nextInt(clazz.getEnumConstants().length);
+      int x = RANDOM.nextInt(clazz.getEnumConstants().length);
       return clazz.getEnumConstants()[x];
   }
   
   // return random Card from Hand
   public static Card randomCard(Hand hand){
-      int x = random.nextInt(hand.getNumberOfCards());
+      int x = RANDOM.nextInt(hand.getNumberOfCards());
       return hand.get(x);
   }
  
   // return random Card from ArrayList
   public static Card randomCard(ArrayList<Card> list){
-      int x = random.nextInt(list.size());
+      int x = RANDOM.nextInt(list.size());
       return list.get(x);
   }
   
@@ -37,26 +37,26 @@ public class Whist extends CardGame {
 	  return card1.getRankId() < card2.getRankId(); // Warning: Reverse rank order of cards (see comment on enum)
   }
 	 
-  private final String version = "1.0";
+  private final String VERSION = "1.0";
   public  int nbPlayers;
   public int nbStartCards;
   public int winningScore;
   public RevelentInformation information = new RevelentInformation();
 
-  private final int handWidth = 400;
+  private final int HANDWIDTH = 400;
   private final int trickWidth = 40;
-  private final Deck deck = new Deck(Suit.values(), Rank.values(), "cover");
+  private final Deck DECK = new Deck(Suit.values(), Rank.values(), "cover");
 
   private int humanNum;
   private int npcNum;
 
-  private final Location[] handLocations = {
+  private final Location[] HANDLOCATIONS = {
 			  new Location(350, 625),
 			  new Location(75, 350),
 			  new Location(350, 75),
 			  new Location(625, 350)
   };
-  private final Location[] scoreLocations = {
+  private final Location[] SCORELOCATIONS = {
 			  new Location(575, 675),
 			  new Location(25, 575),
 			  new Location(575, 25),
@@ -64,9 +64,9 @@ public class Whist extends CardGame {
   };
 
   private Actor[] scoreActors = {null, null, null, null };
-  private final Location trickLocation = new Location(350, 350);
-  private final Location textLocation = new Location(350, 450);
-  private final int thinkingTime = 2000;
+  private final Location TRICKLOCATION = new Location(350, 350);
+  private final Location TEXTLOCATION = new Location(350, 450);
+  private final int THINKINGTIME = 2000;
   private Hand[] hands;
   private Location hideLocation = new Location(-500, - 500);
   private Location trumpsActorLocation = new Location(50, 50);
@@ -84,26 +84,26 @@ public class Whist extends CardGame {
 
   public void setStatus(String string) { setStatusText(string); }
   private int[] scores;
-  Font bigFont = new Font("Serif", Font.BOLD, 36);
+  private Font bigFont = new Font("Serif", Font.BOLD, 36);
 
 	private void initScore() {
 	 for (int i = 0; i < nbPlayers; i++) {
 		 scores[i] = 0;
 		 scoreActors[i] = new TextActor("0", Color.WHITE, bgColor, bigFont);
-		 addActor(scoreActors[i], scoreLocations[i]);
+		 addActor(scoreActors[i], SCORELOCATIONS[i]);
 	 }
   }
 
 	private void updateScore(int player) {
 	removeActor(scoreActors[player]);
 	scoreActors[player] = new TextActor(String.valueOf(scores[player]), Color.WHITE, bgColor, bigFont);
-	addActor(scoreActors[player], scoreLocations[player]);
+	addActor(scoreActors[player], SCORELOCATIONS[player]);
 }
 
 	private Card selected;
 
 	private void initRound() {
-		 hands = deck.dealingOut(nbPlayers, nbStartCards); // Last element of hands is leftover cards; these are ignored
+		 hands = DECK.dealingOut(nbPlayers, nbStartCards); // Last element of hands is leftover cards; these are ignored
 		 for (int i = 0; i < nbPlayers; i++) {
 			   hands[i].sort(Hand.SortType.SUITPRIORITY, true);
 		 }
@@ -119,11 +119,11 @@ public class Whist extends CardGame {
 		 // graphics
 	    RowLayout[] layouts = new RowLayout[nbPlayers];
 	    for (int i = 0; i < nbPlayers; i++) {
-	      	layouts[i] = new RowLayout(handLocations[i], handWidth);
+	      	layouts[i] = new RowLayout(HANDLOCATIONS[i], HANDWIDTH);
 	      	layouts[i].setRotationAngle(90 * i);
 	      	// layouts[i].setStepDelay(10);
 	      	hands[i].setView(this, layouts[i]);
-	      	hands[i].setTargetArea(new TargetArea(trickLocation));
+	      	hands[i].setTargetArea(new TargetArea(TRICKLOCATION));
 	      	hands[i].draw();
 	    }
 //	    for (int i = 1; i < nbPlayers; i++)  // This code can be used to visually hide the cards in a hand (make them face down)
@@ -146,7 +146,7 @@ public class Whist extends CardGame {
  	private Optional<Integer> playRound() {  // Returns winner, if any
 		// Select and display trump suit
 		final Suit trumps = randomEnum(Suit.class);
-		final Actor trumpsActor = new Actor("sprites/"+trumpImage[trumps.ordinal()]);
+		final Actor trumpsActor = new Actor("sprites/"+ TRUMPIMAGE[trumps.ordinal()]);
 	    addActor(trumpsActor, trumpsActorLocation);
 		// End trump suit
 		Hand trick;
@@ -154,11 +154,11 @@ public class Whist extends CardGame {
 		Card winningCard;
 		Suit lead;
 
-		int nextPlayer = random.nextInt(nbPlayers); // randomly select player to lead for this round
+		int nextPlayer = RANDOM.nextInt(nbPlayers); // randomly select player to lead for this round
 
 		information.setTrump(trumps);
 		for (int i = 0; i < nbStartCards; i++) {
-			trick = new Hand(deck);
+			trick = new Hand(DECK);
     		selected = null;
         	if (players.getPlayers().get(nextPlayer).isHuman()) {  // Select lead depending on player type
     			players.getPlayers().get(nextPlayer).operate();
@@ -166,7 +166,7 @@ public class Whist extends CardGame {
     			while (null == selected) delay(100);
         	} else {
     			setStatusText("Player " + nextPlayer + " thinking...");
-    			delay(thinkingTime);
+    			delay(THINKINGTIME);
 				((NPC) players.getPlayers().get(nextPlayer)).setCards(players.getPlayers().get(nextPlayer).getHand().getCardList());
     			players.getPlayers().get(nextPlayer).operate();
             	selected = ((NPC)players.getPlayers().get(nextPlayer)).getCurrentCard();
@@ -174,7 +174,7 @@ public class Whist extends CardGame {
 
 
         	// Lead with selected card
-			trick.setView(this, new RowLayout(trickLocation, (trick.getNumberOfCards()+2)*trickWidth));
+			trick.setView(this, new RowLayout(TRICKLOCATION, (trick.getNumberOfCards()+2)*trickWidth));
         	trick.draw();
 			selected.setVerso(false);
 			// No restrictions on the card being lead
@@ -201,7 +201,7 @@ public class Whist extends CardGame {
 							new NaiveLegalDecorator((NPC)players.getPlayers().get(nextPlayer), lead, trumps),
 							new TrumpSavingDecorator((NPC)players.getPlayers().get(nextPlayer), lead, trumps)};
 
-		        	delay(thinkingTime);
+		        	delay(THINKINGTIME);
 
 					FilterMethod[nextPlayer - humanNum].CardSet();
 
@@ -211,7 +211,7 @@ public class Whist extends CardGame {
 	        	}
 				information.Remove(selected);
 	        	// Follow with selected card
-		        trick.setView(this, new RowLayout(trickLocation, (trick.getNumberOfCards()+2)*trickWidth));
+		        trick.setView(this, new RowLayout(TRICKLOCATION, (trick.getNumberOfCards()+2)*trickWidth));
 				trick.draw();
 				selected.setVerso(false);  // In case it is upside down
 				// Check: Following card must follow suit if possible
@@ -308,7 +308,7 @@ public class Whist extends CardGame {
 
 	public Whist() {
     	super(700, 700, 30);
-    	setTitle("Whist (V" + version + ") Constructed for UofM SWEN30006 with JGameGrid (www.aplu.ch)");
+    	setTitle("Whist (V" + VERSION + ") Constructed for UofM SWEN30006 with JGameGrid (www.aplu.ch)");
     	setStatusText("Initializing...");
 		ReadPropertyFile();
     	initScore();
@@ -318,7 +318,7 @@ public class Whist extends CardGame {
       	winner = playRound();
       	information.Initialise();
     	} while (!winner.isPresent());
-    	addActor(new Actor("sprites/gameover.gif"), textLocation);
+    	addActor(new Actor("sprites/gameover.gif"), TEXTLOCATION);
     	setStatusText("Game over. Winner is player: " + winner.get());
     	refresh();
   	}
