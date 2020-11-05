@@ -45,6 +45,9 @@ public class Whist extends CardGame {
 
   private final int HANDWIDTH = 400;
   private final int trickWidth = 40;
+  private final static int WIDTH = 700;
+  private final static int HEIGHT = 700;
+  private final static int STATUS_HEIGHT = 30;
   private final Deck DECK = new Deck(Suit.values(), Rank.values(), "cover");
 
   private int humanNum;
@@ -67,6 +70,8 @@ public class Whist extends CardGame {
   private final Location TRICKLOCATION = new Location(350, 350);
   private final Location TEXTLOCATION = new Location(350, 450);
   private final int THINKINGTIME = 2000;
+  private final int HUMAN_DELAY_TIME = 100;
+  private final int TRICK_DELAY_TIME = 600;
   private Hand[] hands;
   private Location hideLocation = new Location(-500, - 500);
   private Location trumpsActorLocation = new Location(50, 50);
@@ -75,9 +80,8 @@ public class Whist extends CardGame {
 
   private int[] NPCSelectMethod;
   private int[] NPCFilterMethod;
-
-  	//stores the players
-  	private ManipulatePlayer players;
+  //stores the players
+  private ManipulatePlayer players;
 
   	//check wether the player is human or npc
 	public static boolean isHuman = false;
@@ -95,9 +99,9 @@ public class Whist extends CardGame {
   }
 
 	private void updateScore(int player) {
-	removeActor(scoreActors[player]);
-	scoreActors[player] = new TextActor(String.valueOf(scores[player]), Color.WHITE, bgColor, bigFont);
-	addActor(scoreActors[player], SCORELOCATIONS[player]);
+		removeActor(scoreActors[player]);
+		scoreActors[player] = new TextActor(String.valueOf(scores[player]), Color.WHITE, bgColor, bigFont);
+		addActor(scoreActors[player], SCORELOCATIONS[player]);
 }
 
 	private Card selected;
@@ -163,7 +167,7 @@ public class Whist extends CardGame {
         	if (players.getPlayers().get(nextPlayer).isHuman()) {  // Select lead depending on player type
     			players.getPlayers().get(nextPlayer).operate();
     			setStatus("Player " + nextPlayer +  " double-click on card to lead.");
-    			while (null == selected) delay(100);
+    			while (null == selected) delay(HUMAN_DELAY_TIME);
         	} else {
     			setStatusText("Player " + nextPlayer + " thinking...");
     			delay(THINKINGTIME);
@@ -193,7 +197,7 @@ public class Whist extends CardGame {
 	        	if (players.getPlayers().get(nextPlayer).isHuman()) {
 					players.getPlayers().get(nextPlayer).operate();
 					setStatus("Player " + nextPlayer +  " double-click on card to lead.");
-	    			while (null == selected) delay(100);
+	    			while (null == selected) delay(HUMAN_DELAY_TIME);
 	        	} else {
 		        	setStatusText("Player " + nextPlayer + " thinking...");
 
@@ -241,7 +245,7 @@ public class Whist extends CardGame {
 				 }
 			// End Follow
 			}
-			delay(600);
+			delay(TRICK_DELAY_TIME);
 			trick.setView(this, new RowLayout(hideLocation, 0));
 			trick.draw();
 			nextPlayer = winner;
@@ -307,7 +311,7 @@ public class Whist extends CardGame {
 	}
 
 	public Whist() {
-    	super(700, 700, 30);
+    	super(WIDTH, HEIGHT, STATUS_HEIGHT);
     	setTitle("Whist (V" + VERSION + ") Constructed for UofM SWEN30006 with JGameGrid (www.aplu.ch)");
     	setStatusText("Initializing...");
 		ReadPropertyFile();
