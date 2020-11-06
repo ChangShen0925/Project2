@@ -10,99 +10,99 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @SuppressWarnings("serial")
 public class Whist extends CardGame {
+		final String TRUMPIMAGE[] = {"bigspade.gif","bigheart.gif","bigdiamond.gif","bigclub.gif"};
 
-  final String TRUMPIMAGE[] = {"bigspade.gif","bigheart.gif","bigdiamond.gif","bigclub.gif"};
-
-  static final Random RANDOM = ThreadLocalRandom.current();
+  	static final Random RANDOM = ThreadLocalRandom.current();
   
-  // return random Enum value
-  public static <T extends Enum<?>> T randomEnum(Class<T> clazz){
-      int x = RANDOM.nextInt(clazz.getEnumConstants().length);
-      return clazz.getEnumConstants()[x];
-  }
+  	// return random Enum value
+  	public static <T extends Enum<?>> T randomEnum(Class<T> clazz){
+      	int x = RANDOM.nextInt(clazz.getEnumConstants().length);
+      	return clazz.getEnumConstants()[x];
+  	}
   
-  // return random Card from Hand
-  public static Card randomCard(Hand hand){
-      int x = RANDOM.nextInt(hand.getNumberOfCards());
-      return hand.get(x);
-  }
+  	// return random Card from Hand
+  	public static Card randomCard(Hand hand){
+      	int x = RANDOM.nextInt(hand.getNumberOfCards());
+      	return hand.get(x);
+  	}
  
-  // return random Card from ArrayList
-  public static Card randomCard(ArrayList<Card> list){
-      int x = RANDOM.nextInt(list.size());
-      return list.get(x);
-  }
+  	// return random Card from ArrayList
+  	public static Card randomCard(ArrayList<Card> list){
+      	int x = RANDOM.nextInt(list.size());
+      	return list.get(x);
+  	}
   
-  public boolean rankGreater(Card card1, Card card2) {
-	  return card1.getRankId() < card2.getRankId(); // Warning: Reverse rank order of cards (see comment on enum)
-  }
+  	public boolean rankGreater(Card card1, Card card2) {
+	  	return card1.getRankId() < card2.getRankId(); // Warning: Reverse rank order of cards (see comment on enum)
+  	}
 	 
-  private final String VERSION = "1.0";
-  public  int nbPlayers;
-  public int nbStartCards;
-  public int winningScore;
-  public RevelentInformation information = new RevelentInformation();
+  	private final String VERSION = "1.0";
+  	public  int nbPlayers;
+  	public int nbStartCards;
+  	public int winningScore;
+  	public RevelentInformation information = new RevelentInformation();
 
-  private final int HANDWIDTH = 400;
-  private final int trickWidth = 40;
-  private final static int WIDTH = 700;
-  private final static int HEIGHT = 700;
-  private final static int STATUS_HEIGHT = 30;
-  private final Deck DECK = new Deck(Suit.values(), Rank.values(), "cover");
+  	private final int HANDWIDTH = 400;
+  	private final int trickWidth = 40;
+	private final static int WIDTH = 700;
+  	private final static int HEIGHT = 700;
+  	private final static int STATUS_HEIGHT = 30;
+  	private final static int rightAngle = 90;
+  	private final Deck DECK = new Deck(Suit.values(), Rank.values(), "cover");
 
-  private int humanNum;
-  private int npcNum;
+  	private int humanNum;
+  	private int npcNum;
 
-  private final Location[] HANDLOCATIONS = {
-			  new Location(350, 625),
-			  new Location(75, 350),
-			  new Location(350, 75),
-			  new Location(625, 350)
-  };
-  private final Location[] SCORELOCATIONS = {
-			  new Location(575, 675),
-			  new Location(25, 575),
-			  new Location(575, 25),
-			  new Location(650, 575)
-  };
+  	private final Location[] HANDLOCATIONS = {
+  			new Location(350, 625),
+			new Location(75, 350),
+			new Location(350, 75),
+			new Location(625, 350)
+  	};
+  	private final Location[] SCORELOCATIONS = {
+  			new Location(575, 675),
+			new Location(25, 575),
+			new Location(575, 25),
+			new Location(650, 575)
+  	};
 
-  private Actor[] scoreActors = {null, null, null, null };
-  private final Location TRICKLOCATION = new Location(350, 350);
-  private final Location TEXTLOCATION = new Location(350, 450);
-  private final int THINKINGTIME = 2000;
-  private final int HUMAN_DELAY_TIME = 100;
-  private final int TRICK_DELAY_TIME = 600;
-  private Hand[] hands;
-  private Location hideLocation = new Location(-500, - 500);
-  private Location trumpsActorLocation = new Location(50, 50);
-  private boolean enforceRules=false;
+  	private Actor[] scoreActors = {null, null, null, null };
+  	private final Location TRICKLOCATION = new Location(350, 350);
+  	private final Location TEXTLOCATION = new Location(350, 450);
+  	private final int THINKINGTIME = 2000;
+  	private final int HUMAN_DELAY_TIME = 100;
+  	private final int TRICK_DELAY_TIME = 600;
+  	private Hand[] hands;
+  	private Location hideLocation = new Location(-500, - 500);
+  	private Location trumpsActorLocation = new Location(50, 50);
+  	private boolean enforceRules=false;
 
 
-  private int[] NPCSelectMethod;
-  private int[] NPCFilterMethod;
-  //stores the players
-  private ManipulatePlayer players;
+  	private int[] NPCSelectMethod;
+  	private int[] NPCFilterMethod;
+  	//stores the players
+  	private ManipulatePlayer players;
 
   	//check wether the player is human or npc
 	public static boolean isHuman = false;
 
-  public void setStatus(String string) { setStatusText(string); }
-  private int[] scores;
-  private Font bigFont = new Font("Serif", Font.BOLD, 36);
+  	public void setStatus(String string) { setStatusText(string); }
+  	private int[] scores;
+  	private Font bigFont = new Font("Serif", Font.BOLD, 36);
 
 	private void initScore() {
-	 for (int i = 0; i < nbPlayers; i++) {
-		 scores[i] = 0;
-		 scoreActors[i] = new TextActor("0", Color.WHITE, bgColor, bigFont);
-		 addActor(scoreActors[i], SCORELOCATIONS[i]);
-	 }
-  }
+		for (int i = 0; i < nbPlayers; i++) {
+			scores[i] = 0;
+		 	scoreActors[i] = new TextActor("0", Color.WHITE, bgColor, bigFont);
+		 	addActor(scoreActors[i], SCORELOCATIONS[i]);
+	 	}
+  	}
 
 	private void updateScore(int player) {
 		removeActor(scoreActors[player]);
 		scoreActors[player] = new TextActor(String.valueOf(scores[player]), Color.WHITE, bgColor, bigFont);
 		addActor(scoreActors[player], SCORELOCATIONS[player]);
-}
+	}
 
 	private Card selected;
 
@@ -124,7 +124,7 @@ public class Whist extends CardGame {
 	    RowLayout[] layouts = new RowLayout[nbPlayers];
 	    for (int i = 0; i < nbPlayers; i++) {
 	      	layouts[i] = new RowLayout(HANDLOCATIONS[i], HANDWIDTH);
-	      	layouts[i].setRotationAngle(90 * i);
+	      	layouts[i].setRotationAngle(rightAngle * i);
 	      	// layouts[i].setStepDelay(10);
 	      	hands[i].setView(this, layouts[i]);
 	      	hands[i].setTargetArea(new TargetArea(TRICKLOCATION));
