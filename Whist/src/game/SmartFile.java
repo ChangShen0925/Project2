@@ -5,8 +5,8 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 
-public class smartFile implements File{
-    static final Random RANDOM = ThreadLocalRandom.current();
+public class SmartFile implements File{
+    public static final Random RANDOM = ThreadLocalRandom.current();
     private static final int NUMBER_OF_FILTERING_METHOD = 3;
     private static final int NUMBER_OF_SELECTING_METHOD = 3;
     @Override

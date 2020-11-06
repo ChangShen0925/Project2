@@ -4,9 +4,9 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class legalFile implements File{
-    private static final int NumberOfSelectingMethod = 3;
-    static final Random random = ThreadLocalRandom.current();
+public class LegalFile implements File{
+    private static final int NUMBER_OF_FILTERING_METHOD = 3;
+    public static final Random RANDOM = ThreadLocalRandom.current();
 
     @Override
     public Properties writeProperties() {

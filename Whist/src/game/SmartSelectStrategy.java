@@ -7,10 +7,8 @@ import ch.aplu.jgamegrid.*;
 import java.util.ArrayList;
 
 public class SmartSelectStrategy extends SelectingStrategy{
-    public RevelentInformation information;
     public SmartSelectStrategy(RevelentInformation information){
         super(information);
-        this.information = information;
     }
 
     @Override

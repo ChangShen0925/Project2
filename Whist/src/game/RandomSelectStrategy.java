@@ -7,7 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 
 public class RandomSelectStrategy extends SelectingStrategy{
-    static final Random random = ThreadLocalRandom.current();
+    public static final Random RANDOM = ThreadLocalRandom.current();
 
     public RandomSelectStrategy(RevelentInformation information){
         super(information);
@@ -15,7 +15,7 @@ public class RandomSelectStrategy extends SelectingStrategy{
 
     @Override
     public Card SelectCard(ArrayList<Card> cards) {
-        int x = random.nextInt(cards.size());
+        int x = RANDOM.nextInt(cards.size());
 
         return cards.get(x);
     }

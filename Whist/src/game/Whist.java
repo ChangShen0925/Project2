@@ -259,7 +259,7 @@ public class Whist extends CardGame {
 	public void ReadPropertyFile(){
 		 //File file= new whistFile();
 		 //File file= new legalFile();
-		 File file= new smartFile();
+		 File file= new SmartFile();
 		 Properties PropertyFile = file.writeProperties();
 		 humanNum = Integer.parseInt(PropertyFile.getProperty("human"));
 		 npcNum = Integer.parseInt(PropertyFile.getProperty("NPC"));
