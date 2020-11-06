@@ -43,11 +43,11 @@ public class Whist extends CardGame {
   	public RevelentInformation information = new RevelentInformation();
 
   	private final int HANDWIDTH = 400;
-  	private final int trickWidth = 40;
+  	private final int TRICKWIDTH = 40;
 	private final static int WIDTH = 700;
   	private final static int HEIGHT = 700;
   	private final static int STATUS_HEIGHT = 30;
-  	private final static int rightAngle = 90;
+  	private final static int RIGHT_ANGLE = 90;
   	private final Deck DECK = new Deck(Suit.values(), Rank.values(), "cover");
 
   	private int humanNum;
@@ -124,7 +124,7 @@ public class Whist extends CardGame {
 	    RowLayout[] layouts = new RowLayout[nbPlayers];
 	    for (int i = 0; i < nbPlayers; i++) {
 	      	layouts[i] = new RowLayout(HANDLOCATIONS[i], HANDWIDTH);
-	      	layouts[i].setRotationAngle(rightAngle * i);
+	      	layouts[i].setRotationAngle(RIGHT_ANGLE * i);
 	      	// layouts[i].setStepDelay(10);
 	      	hands[i].setView(this, layouts[i]);
 	      	hands[i].setTargetArea(new TargetArea(TRICKLOCATION));
@@ -178,7 +178,7 @@ public class Whist extends CardGame {
 
 
         	// Lead with selected card
-			trick.setView(this, new RowLayout(TRICKLOCATION, (trick.getNumberOfCards()+2)*trickWidth));
+			trick.setView(this, new RowLayout(TRICKLOCATION, (trick.getNumberOfCards()+2)* TRICKWIDTH));
         	trick.draw();
 			selected.setVerso(false);
 			// No restrictions on the card being lead
@@ -212,7 +212,7 @@ public class Whist extends CardGame {
 	        	}
 				information.Remove(selected);
 	        	// Follow with selected card
-		        trick.setView(this, new RowLayout(TRICKLOCATION, (trick.getNumberOfCards()+2)*trickWidth));
+		        trick.setView(this, new RowLayout(TRICKLOCATION, (trick.getNumberOfCards()+2)* TRICKWIDTH));
 				trick.draw();
 				selected.setVerso(false);  // In case it is upside down
 				// Check: Following card must follow suit if possible
