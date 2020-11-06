@@ -41,6 +41,13 @@ public class ManipulatePlayer {
         }
     }
 
+    public void selectDecorator(NPC player, Suit lead, Suit trumps, int position){
+
+        FilterNPC[] FilterMethod = new FilterNPC[]{player, new NaiveLegalDecorator(player, lead, trumps),
+                new TrumpSavingDecorator(player, lead, trumps)};
+        FilterMethod[position].CardSet();
+    }
+
     private NPC createNPC(Hand hand, SelectingStrategy method){
         return new NPC(hand, method);
     }

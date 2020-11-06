@@ -171,8 +171,8 @@ public class Whist extends CardGame {
         	} else {
     			setStatusText("Player " + nextPlayer + " thinking...");
     			delay(THINKINGTIME);
-				((NPC) players.getPlayers().get(nextPlayer)).setCards(players.getPlayers().get(nextPlayer).getHand().getCardList());
-    			players.getPlayers().get(nextPlayer).operate();
+				((NPC)players.getPlayers().get(nextPlayer)).setCards(players.getPlayers().get(nextPlayer).getHand().getCardList());
+				players.getPlayers().get(nextPlayer).operate();
             	selected = ((NPC)players.getPlayers().get(nextPlayer)).getCurrentCard();
         	}
 
@@ -200,17 +200,14 @@ public class Whist extends CardGame {
 	    			while (null == selected) delay(HUMAN_DELAY_TIME);
 	        	} else {
 		        	setStatusText("Player " + nextPlayer + " thinking...");
+					delay(THINKINGTIME);
 
-					FilterNPC[] FilterMethod = new FilterNPC[]{((NPC)players.getPlayers().get(nextPlayer)),
-							new NaiveLegalDecorator((NPC)players.getPlayers().get(nextPlayer), lead, trumps),
-							new TrumpSavingDecorator((NPC)players.getPlayers().get(nextPlayer), lead, trumps)};
+					//filtering the cards
+					players.selectDecorator((NPC)players.getPlayers().get(nextPlayer), lead, trumps, nextPlayer - humanNum);
 
-		        	delay(THINKINGTIME);
-
-					FilterMethod[nextPlayer - humanNum].CardSet();
-
-
+					//run npc
 					players.getPlayers().get(nextPlayer).operate();
+					//update current selected cards
 					selected = ((NPC)players.getPlayers().get(nextPlayer)).getCurrentCard();
 	        	}
 				information.Remove(selected);
@@ -318,9 +315,9 @@ public class Whist extends CardGame {
     	initScore();
     	Optional<Integer> winner;
     	do {
-      	initRound();
-      	winner = playRound();
-      	information.Initialise();
+      		initRound();
+      		winner = playRound();
+      		information.Initialise();
     	} while (!winner.isPresent());
     	addActor(new Actor("sprites/gameover.gif"), TEXTLOCATION);
     	setStatusText("Game over. Winner is player: " + winner.get());
