@@ -139,13 +139,13 @@ public class Whist extends CardGame {
 	}
 
 	private String printHand(ArrayList<Card> cards) {
-	String out = "";
-	for(int i = 0; i < cards.size(); i++) {
-		out += cards.get(i).toString();
-		if(i < cards.size()-1) out += ",";
+		String out = "";
+		for(int i = 0; i < cards.size(); i++) {
+			out += cards.get(i).toString();
+			if(i < cards.size()-1) out += ",";
+		}
+		return(out);
 	}
-	return(out);
-}
 
  	private Optional<Integer> playRound() {  // Returns winner, if any
 		// Select and display trump suit
