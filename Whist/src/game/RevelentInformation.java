@@ -11,6 +11,9 @@ public class RevelentInformation {
     public Suit trump;
     Hand[] hands = new Hand[4];
     private final Deck deck = new Deck(Suit.values(), Rank.values(), "cover");
+    /*
+    Record the card that has been aplyed
+     */
     public void Initialise(){
         hands = deck.dealingOut(4, 13);
         for (Hand hand: hands){
@@ -43,6 +46,9 @@ public class RevelentInformation {
     public void Remove(Card card){
         cards.remove(card);
     }
+    /*
+    The NPC will play the lowest rank card if they dont have the highest rank card based on the revelent information.
+     */
     public int SuitableCard(ArrayList<Card> HandCard){
         int HighestLead = 100;
         int HighestTrump = 100;

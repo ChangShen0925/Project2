@@ -5,6 +5,10 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class LegalFile implements File{
+    /*
+    For Filtering Method, 0 means non filtering method, 1 means naive legal method, 2 means trump saving method
+    For Seleting Method, 0 means Random selecting method, 1 means highest selecting method, 2 means smart selecting method
+     */
     private static final int NUMBER_OF_FILTERING_METHOD = 3;
     public static final Random RANDOM = ThreadLocalRandom.current();
 
