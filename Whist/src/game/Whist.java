@@ -5,8 +5,11 @@ import ch.aplu.jgamegrid.*;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.Properties;
 
 @SuppressWarnings("serial")
 public class Whist extends CardGame {
@@ -40,6 +43,7 @@ public class Whist extends CardGame {
   	public  int nbPlayers;
   	public int nbStartCards;
   	public int winningScore;
+  	public int seedProp = -1;
   	public RevelentInformation information = new RevelentInformation();
 
   	private final int HANDWIDTH = 400;
@@ -130,11 +134,18 @@ public class Whist extends CardGame {
 	      	hands[i].setTargetArea(new TargetArea(TRICKLOCATION));
 	      	hands[i].draw();
 	    }
-//	    for (int i = 1; i < nbPlayers; i++)  // This code can be used to visually hide the cards in a hand (make them face down)
-//	      hands[i].setVerso(true);
-	    // End graphics
+	    for (int i = humanNum; i < nbPlayers; i++) {  // This code can be used to visually hide the cards in a hand (make them face down)
+			hands[i].setVerso(true);
+		}
 		information.Initialise();
-		players = new ManipulatePlayer(nbPlayers, humanNum, npcNum, hands, information);
+	    HashMap<Boolean, Integer> seedMap = new HashMap<>();
+	    if(seedProp == -1){
+	    	seedMap.put(false, 0);
+		}else{
+	    	seedMap.put(true,seedProp);
+		}
+	    seedProp = seedMap.get(true);
+		players = new ManipulatePlayer(nbPlayers, humanNum, npcNum, hands, information, seedMap);
 	    players.init(NPCSelectMethod);
 	}
 
@@ -256,11 +267,21 @@ public class Whist extends CardGame {
 		return Optional.empty();
 	}
 
-	public void ReadPropertyFile(){
-		 File file= new WhistFile();
-		 //File file= new LegalFile();
-		 //File file= new SmartFile();
-		 Properties PropertyFile = file.writeProperties();
+	public void ReadPropertyFile() throws IOException {
+		 Properties PropertyFile = new Properties();
+
+		 FileReader inStream = null;
+		 try{
+		 	inStream = new FileReader("Whist/whist.properties");
+		 	//inStream = new FileReader("Whist/legal.properties");
+		 	//inStream = new FileReader("Whist/smart.properties");
+		 }finally {
+		 	if(inStream != null){
+				PropertyFile.load(inStream);
+		 		inStream.close();
+			}
+		 }
+		 seedProp = Integer.parseInt(PropertyFile.getProperty("Seed"));
 		 humanNum = Integer.parseInt(PropertyFile.getProperty("human"));
 		 npcNum = Integer.parseInt(PropertyFile.getProperty("NPC"));
 		 nbStartCards = Integer.parseInt(PropertyFile.getProperty("nbStartCard"));
@@ -307,7 +328,7 @@ public class Whist extends CardGame {
 
 	}
 
-	public Whist() {
+	public Whist() throws IOException{
     	super(WIDTH, HEIGHT, STATUS_HEIGHT);
     	setTitle("Whist (V" + VERSION + ") Constructed for UofM SWEN30006 with JGameGrid (www.aplu.ch)");
     	setStatusText("Initializing...");
@@ -324,7 +345,7 @@ public class Whist extends CardGame {
     	refresh();
   	}
 
-  	public static void main(String[] args)
+  	public static void main(String[] args) throws IOException
   {
   	new Whist();
   }
